@@ -24,8 +24,7 @@
         name: 'header',
         computed: {
             linkBorderIndex() {
-                //return this.$store.state.linkBorderIndex;
-                return 1;
+                return this.$store.state.linkBorderIndex;
             },
         },
 

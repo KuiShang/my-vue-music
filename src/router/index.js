@@ -15,6 +15,11 @@ export default new Router({
     linkActiveClass: 'active',
     routes:[
         {
+            path: '/',
+            name: '/',
+            component: MusicList
+        },
+        {
             path: '/music-list',
             name: 'MusicList',
             component: MusicList
