@@ -25,8 +25,16 @@
         computed: {
             linkBorderIndex() {
                 return this.$store.state.linkBorderIndex;
-            },
+            }
         },
+        methods:{
+            toSearch() {
+                this.$router.push('/find');
+            },
+            showAsideMenu(flag) {
+                this.$store.commit('showAsideMenu', flag);
+            }
+        }
 
     }
 </script>
