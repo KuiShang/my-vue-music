@@ -23,14 +23,33 @@
                     </div>
                 </div>
 
+                <div class="music-control">
+                    <i @click="play()" :class="[isPlaying ? pauseIcon : playIcon]"></i>
+                </div>
             </div>
         </div>
     </transition>
 </template>
 <script type="text/ecmascript-6">
     export default{
+        mounted() {
+            this.nativeAudio = document.querySelector('audio');
+
+            this.nativeAudio.addEventListener('play', () => {
+                this.totalTime = this.transformTime(this.nativeAudio.duration);
+                this.now = this.nativeAudio.currentTime;
+
+                setInterval(() => {
+                    this.now = this.nativeAudio.currentTime;
+
+                }, 1000)
+
+            })
+        },
         data(){
             return {
+                playIcon: 'play-icon',
+                pauseIcon: 'pause-icon',
                 defaultImg: 'https://microzz.com/img/avatar.jpg',
                 now: 0,
                 nativeAudio: {},
@@ -38,9 +57,14 @@
             }
         },
         computed: {
-
+            isPlaying() {
+                return this.$store.state.isPlaying;
+            },
             audio() {
                 return this.$store.state.audio;
+            },
+            DOM() {
+                return this.$store.state.DOM;
             },
             isShowMiniMusic() {
                 return this.$store.state.isShowMiniMusic;
@@ -53,6 +77,10 @@
             }
         },
         methods: {
+            play() {
+                this.$store.commit('play', !this.isPlaying);
+                !this.isPlaying ? this.DOM.audioDom.pause() : this.DOM.audioDom.play();
+            },
             showPlay() {
                 if (this.isShowAsideMenu) {
                     return;
@@ -82,10 +110,11 @@
                 let coordStart = progressBar.getBoundingClientRect().left;
                 let coordEnd = event.touches[0].pageX;
                 this.$refs.now.style.width = ((coordEnd - coordStart) / progressBar.offsetWidth).toFixed(3) * 100 + '%';
+                this.now = (coordEnd - coordStart) / progressBar.offsetWidth * this.nativeAudio.duration;
             },
             touchEnd(event) {
                 this.nativeAudio.currentTime = this.$refs.now.style.width.replace('%', '')/100 * this.nativeAudio.duration;
-                this.now = this.nativeAudio.currentTime;
+                //this.now = this.nativeAudio.currentTime;
                 this.nativeAudio.play();
                 this.$store.commit('play', true);
             },
@@ -93,12 +122,13 @@
     }
 
 </script>
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
     .footer {
         background: #B72712;
         text-align: center;
         .mini-music {
             display: flex;
+            height:70px;
             line-height: 70px;
             cursor: pointer;
             .music-img {
@@ -178,6 +208,27 @@
                             background-color: white;
                         }
                     }
+                }
+            }
+            .music-control {
+                flex: 1.5;
+                i {
+                    padding-right: 10px;
+                    width: 45px;
+                    height: 45px;
+                    margin-top: 13px;
+                    display: inline-block;
+                    cursor: pointer;
+                    border-radius: 22px;
+                }
+                .play-icon {
+                    background: url(./play.svg) no-repeat;
+                    background-size: contain;
+
+                }
+                .pause-icon {
+                    background: url(./pause.svg) no-repeat;
+                    background-size: contain;
                 }
             }
         }

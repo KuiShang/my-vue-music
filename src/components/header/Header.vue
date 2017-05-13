@@ -38,7 +38,7 @@
 
     }
 </script>
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
     .header {
         background-color: #B72712;
         color: white;

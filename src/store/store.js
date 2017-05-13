@@ -14,6 +14,7 @@ const state = {
     linkBorderIndex: '',
     musicData: [],
     isPlaying: false,
+    skinColor: localStorage.skinColor || '#B72712',
     isShowIndex: true,
     isShowMiniMusic: false,
     isShowAsideMenu: false,

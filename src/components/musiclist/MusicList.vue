@@ -48,7 +48,7 @@
     }
 
 </script>
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
     .music-list {
         flex: 8;
         padding-top: 4px;
