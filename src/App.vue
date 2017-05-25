@@ -4,6 +4,8 @@
         <!-- 主界面部分 -->
         <transition name="show">
             <div v-show="isShowIndex" class="index">
+                <!-- 侧边栏 -->
+                <AsideMenu v-show="isShowAsideMenu"></AsideMenu>
                 <!-- 头部 -->
                 <VHeader></VHeader>
 
@@ -20,6 +22,9 @@
             <Play v-show="!isShowIndex"></Play>
         </transition>
 
+        <!-- 关于界面 -->
+        <About v-if="isShowAbout"></About>
+
         <!-- 隐藏的audio标签 -->
         <audio :src="audio.src || (musicData[0]&&musicData[0].src) || defaultSrc" :autoplay="isPlaying" ref="audioDom"></audio>
     </div>
@@ -30,6 +35,8 @@
     import VHeader from './components/header/Header.vue';
     import Play from './components/play/Play.vue';
     import VFooter from './components/footer/Footer.vue';
+    import AsideMenu from './components/asideMenu/AsideMenu.vue';
+    import About from './components/about/About.vue';
 
     export default {
         name: 'app',
@@ -42,13 +49,15 @@
         },
         data () {
             return {
-                msg: 'Welcome to Your Vue.js App'
+                defaultSrc: 'http://m2.music.126.net/K1SFXCvWf8BO9VEpSvx2ew==/7967061257205150.mp3'
             }
         },
         components: {
             VHeader,
             Play,
-            VFooter
+            VFooter,
+            AsideMenu,
+            About
         },
         computed:{
             isShowIndex() {
@@ -62,14 +71,50 @@
             },
             musicData() {
                 return this.$store.state.musicData;
-            }
+            },
+            isShowAsideMenu(){
+              return this.$store.state.isShowAsideMenu
+            },
+            isShowAbout() {
+                return this.$store.state.isShowAbout;
+            },
         }
     }
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
 @import "./common/style/base.scss";
+.showIndex-enter-active {
+    transition: all .4s ease-out;
+}
+.showIndex-leave-active {
+    transition: all 0s ease-in-out;
+}
+.showIndex-enter, .showIndex-leave-active {
+    transform: translateY(350px);
+    opacity: 0;
+}
+.show-enter-active {
+    transition: all .4s ease-in-out;
+}
+.show-leave-active {
+    transition: all 0s ease-out;
+}
+.show-enter, .show-leave-active {
+    transform: translateX(-350px);
+    opacity: 0;
+}
 
+.down-enter-active {
+    transition: all .2s ease-in-out;
+}
+.down-leave-active {
+    transition: all .4s ease-in-out;
+}
+.down-enter, .down-leave-active {
+    transform: translateY(-250px);
+    opacity: 0;
+}
 #app , .index{
     display: flex;
     flex-direction: column;

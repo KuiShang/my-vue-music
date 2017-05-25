@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="content">
-            <transition name="fade">
+            <transition name="fadex">
                 <div v-show="isShowMusicList" class="music-list">
                     <ul>
                         <li @click="toggleMusic(index)" v-for="(item, index) of musicData" :class="{ activeColor: index === audio.index}">{{ (index + 1) +'. &nbsp;'+ item.name}}</li>
@@ -149,6 +149,10 @@
                 this.audio.index = this.audio.index === this.musicData.length - 1 ? 0 : (++this.audio.index);
                 this.$store.commit('toggleMusic', this.audio.index);
             },
+            changeSkinColor(color){
+                this.$store.commit('changeSkinColor', color);
+                this.isShowSkinColors = false;
+            }
         },
 
     }

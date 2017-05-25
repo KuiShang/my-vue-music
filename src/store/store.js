@@ -15,9 +15,9 @@ const state = {
     musicData: [],
     isPlaying: false,
     skinColor: localStorage.skinColor || '#B72712',
-    isShowIndex: true,
     isShowMiniMusic: false,
     isShowAsideMenu: false,
+    isShowAbout: false,
     DOM: {},
     audio: {
         name: '',
@@ -33,16 +33,19 @@ const actions = {
             state.musicData = JSON.parse(localStorage.musics);
             return;
         }
-        axios.get('/music-data.json')
-            .then(res =>{
-                if (res.status === 200) {
-                    state.musicData = res.data.musicData;
-                    localStorage.musics = JSON.stringify(state.musicData);
-                }
-            })
-            .then(() => {
-                commit('toggleMusic',0)
-            });
+        return new Promise((resolve, reject) => {
+            Vue.axios.get('/api/music-data')
+                .then (res => {
+                    if (res.data.errno === 0) {
+                        state.musicData = res.data.musicData;
+                        localStorage.musics = JSON.stringify(state.musicData);
+                    }
+                })
+                .then(() => {
+                    commit('toggleMusic',0)
+                });
+            resolve();
+        });
     }
 }
 
@@ -50,14 +53,22 @@ const mutations = {
     changeLinkBorderIndex(state, index) {
         state.linkBorderIndex = index;
     },
-    showAsideMenu(flag){
-
+    showAsideMenu(state,flag){
+        state.isShowAsideMenu = flag
     },
     toggleMusic(state, index) {
         state.audio.name = state.musicData[index].name;
         state.audio.src = state.musicData[index].src;
         state.audio.musicImgSrc = state.musicData[index].musicImgSrc;
         state.audio.index = index;
+    },
+    addMusic(state, payload) {
+        for (let music of state.musicData) {
+            if (JSON.stringify(music) === JSON.stringify(payload)) {
+                return;
+            }
+        }
+        state.musicData.unshift(payload);
     },
     findDOM(state, payload) {
         state.DOM[payload.name] = payload.dom;
@@ -76,6 +87,18 @@ const mutations = {
     },
     showIndex(state, flag) {
         state.isShowIndex = flag;
+    },
+    changeSkinColor(state, color) {
+        state.skinColor = color;
+    },
+    showAbout(state, flag) {
+        state.isShowAbout = flag;
+    },
+    playMusic(state, payload) {
+        state.audio.name = payload.name;
+        state.audio.src = payload.src;
+        state.audio.musicImgSrc = payload.imgSrc;
+        state.isPlaying = true;
     },
 }
 

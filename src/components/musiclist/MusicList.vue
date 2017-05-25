@@ -31,6 +31,12 @@
             }
         },
         methods: {
+            test1(){
+               console.log(111)
+            },
+            test2(){
+                console.log(222)
+            },
             toggleMusic(index){
                 if (this.$store.state.audio.index === index) {
                     this.DOM.audioDom.paused ? this.DOM.audioDom.play() : this.DOM.audioDom.pause();
@@ -49,6 +55,18 @@
 
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
+
+    
+    .showRouter-enter-active {
+        transition: all .4s ease;
+    }
+    .showRouter-leave-active {
+        transition: all 0s ease;
+    }
+    .showRouter-enter, .showRouter-leave-active {
+        transform: translateX(-150px);
+        opacity: 0;
+    }
     .music-list {
         flex: 8;
         padding-top: 4px;

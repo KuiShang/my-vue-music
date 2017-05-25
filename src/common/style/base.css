@@ -1,31 +1,24 @@
-@charset "UTF-8";
-
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
+  box-sizing: border-box; }
+
 html, body {
   width: 100%;
   height: 100%;
-  overflow: hidden;
-}
-@media screen and(min-width: 769px) {
+  overflow: hidden; }
+
+@media screen and (min-width: 769px) {
   html, body {
     width: 460px;
-    margin: 0 auto;
-  }
+    margin: 0 auto; }
 
-  body{
-    // padding: 10px 0;
-    box-shadow: 0 0 30px gray;
-  }
-}
+  body {
+    box-shadow: 0 0 30px gray; } }
 a {
   position: relative;
   text-decoration: none;
-  color: white;
-}
+  color: white; }
 
 a::after {
   content: "";
@@ -36,31 +29,30 @@ a::after {
   height: 2px;
   background-color: #3F51B5;
   transform: scaleX(0);
-  transition: .3s ease-in-out;
-}
+  transition: .3s ease-in-out; }
+
 a:hover::after {
   transform: scaleX(1);
-  transition: .3s ease-in-out;
-}
+  transition: .3s ease-in-out; }
 
 .fade-enter-active {
-  transition: all .3s ease;
-}
+  transition: all .3s ease; }
+
 .fade-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1); }
+
 .fade-enter, .fade-leave-active {
   transform: translateY(10px);
-  opacity: 0;
-}
+  opacity: 0; }
 
 .fadex-enter-active {
-  transition: all .3s ease;
-}
+  transition: all .3s ease; }
+
 .fadex-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1); }
+
 .fadex-enter, .fadex-leave-active {
   transform: translateX(10px);
-  opacity: 0;
-}
+  opacity: 0; }
+
+/*# sourceMappingURL=base.css.map */
